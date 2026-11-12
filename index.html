@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <!-- ============================================================
+       DEVELOPER'S PROFILE - Single-Page Website
+       Structure : index.html   (this file: skeleton only)
+       Styling   : css/style.css (external, loaded after Bootstrap)
+       Behaviour : js/main.js    (external, renders all content)
+       ============================================================ -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Developer profile and project portfolio.">
+  <title>Developer Profile</title>
+
+  <!-- Google Fonts: one display face + one text face -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3 CSS via jsDelivr CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Our own external stylesheet (must come AFTER Bootstrap so it can override it) -->
+  <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="90" tabindex="0">
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav id="mainNav" class="navbar navbar-expand-md fixed-top site-nav">
+    <div class="container">
+      <a class="navbar-brand" href="#home" id="navBrand" aria-label="Back to top">DEV</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navLinks" aria-controls="navLinks"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navLinks">
+        <ul class="navbar-nav ms-auto align-items-md-center gap-md-2">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#philosophy">Philosophy</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          <li class="nav-item ms-md-2">
+            <!-- Label and behaviour are set by js/main.js -->
+            <button id="themeToggle" type="button" class="btn btn-sm btn-outline-secondary">Dark mode</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ===================== 1. HERO ===================== -->
+    <section id="home" class="hero d-flex align-items-center">
+      <div class="container">
+        <p class="hero-hello mb-2" id="heroHello"></p>
+        <h1 class="hero-name" id="heroName">Kemrick A. Ingcad</h1>
+        <!-- Typewriter line: text is typed by js/main.js -->
+        <p class="hero-role" aria-live="polite">
+          <span id="heroRole"></span><span class="caret" aria-hidden="true"></span>
+        </p>
+        <p class="hero-intro" id="heroIntro"></p>
+        <div class="d-flex flex-wrap gap-2 mt-4">
+          <a href="#projects" class="btn btn-accent btn-lg">See my projects</a>
+          <a href="#contact" class="btn btn-outline-ink btn-lg">Get in touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. PHOTO + MOTTO ===================== -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-md-5 col-lg-4">
+            <!-- Photo is injected by JS, with an initials fallback if the file is missing -->
+            <figure class="portrait mb-0">
+              <img id="portraitImg" class="img-fluid" alt="Portrait of the developer" width="480" height="560">
+            </figure>
+          </div>
+          <div class="col-md-7 col-lg-8">
+            <h2 class="section-title">My motto</h2>
+            <blockquote class="motto" id="mottoText"></blockquote>
+            <p class="motto-by" id="mottoBy"></p>
+            <button id="mottoBtn" type="button" class="btn btn-outline-ink">Show another saying</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. DESIGN PHILOSOPHY ===================== -->
+    <section id="philosophy" class="section section-tint">
+      <div class="container">
+        <div class="row g-5">
+          <div class="col-lg-5">
+            <h2 class="section-title">Design philosophy</h2>
+            <p class="lead" id="philoIntro"></p>
+            <!-- Colour chips are read live from the CSS variables, so they follow the theme -->
+            <h3 class="h6 mt-4">The palette I design with</h3>
+            <div class="swatches" id="swatches"></div>
+            <p class="small text-secondary mt-3" id="typeNote"></p>
+          </div>
+          <div class="col-lg-7">
+            <!-- Bootstrap accordion, generated from CONFIG.philosophy.principles -->
+            <div class="accordion" id="philoAccordion"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 4. PROJECTS PORTFOLIO ===================== -->
+    <section id="projects" class="section">
+      <div class="container">
+        <h2 class="section-title">Projects, midterms to finals</h2>
+        <p class="section-sub">Filter by the stage of the course they were built for.</p>
+
+        <!-- Filter buttons (rendered by JS from the project data) -->
+        <div class="btn-group mb-4" role="group" aria-label="Filter projects" id="projectFilters"></div>
+
+        <!-- Project cards (rendered by JS) -->
+        <div class="row g-4" id="projectGrid"></div>
+
+        <noscript><p class="text-secondary">Please enable JavaScript to view the project portfolio.</p></noscript>
+      </div>
+    </section>
+
+    <!-- ===================== 5. CONTACT ===================== -->
+    <section id="contact" class="section section-tint">
+      <div class="container">
+        <div class="row g-5">
+          <div class="col-lg-5">
+            <h2 class="section-title">Contact me</h2>
+            <p class="lead">Have a project, a question, or feedback on my work? Send a message.</p>
+            <ul class="list-unstyled contact-list" id="contactList"></ul>
+          </div>
+          <div class="col-lg-7">
+            <!-- novalidate: we let Bootstrap's validation styles + JS handle the checks -->
+            <form id="contactForm" class="needs-validation" novalidate>
+              <div class="mb-3">
+                <label for="cName" class="form-label">Your name</label>
+                <input type="text" class="form-control" id="cName" required minlength="2" autocomplete="name">
+                <div class="invalid-feedback">Enter your name (at least 2 characters).</div>
+              </div>
+              <div class="mb-3">
+                <label for="cEmail" class="form-label">Your email</label>
+                <input type="email" class="form-control" id="cEmail" required autocomplete="email">
+                <div class="invalid-feedback">Enter a valid email address, like name@example.com.</div>
+              </div>
+              <div class="mb-3">
+                <label for="cMessage" class="form-label">Message</label>
+                <textarea class="form-control" id="cMessage" rows="5" required minlength="10"></textarea>
+                <div class="invalid-feedback">Write at least 10 characters so I know how to help.</div>
+              </div>
+              <button type="submit" class="btn btn-accent btn-lg">Send message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+      <span id="footerText"></span>
+      <a href="#home">Back to top</a>
+    </div>
+  </footer>
+
+  <!-- ===================== PROJECT DETAILS MODAL (one modal, reused by every card) ===================== -->
+  <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">z
+          <h2 class="modal-title h4" id="projectModalTitle"></h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img id="modalImg" class="img-fluid rounded mb-3 w-100" alt="">
+          <p id="modalSummary"></p>
+          <h3 class="h6">What I built</h3>
+          <ul id="modalDetails"></ul>
+          <div id="modalStack" class="d-flex flex-wrap gap-2"></div>
+        </div>
+        <div class="modal-footer">
+          <a id="modalGithub" class="btn btn-accent" target="_blank" rel="noopener">View on GitHub</a>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TOAST (confirmation after sending the form) ===================== -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="formToast" class="toast" role="status" aria-live="polite" aria-atomic="true">
+      <div class="toast-body" id="formToastBody"></div>
+    </div>
+  </div>
+
+  <!-- Back-to-top button (shown by JS after scrolling) -->
+  <button id="toTop" type="button" class="btn btn-accent to-top" aria-label="Back to top" hidden>Top</button>
+
+  <!-- Bootstrap 5.3 JS bundle (includes Popper) via jsDelivr CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Our own external script. "defer" is not needed because it sits at the end of <body>. -->
+  <script src="js/main.js"></script>
+</body>
+</html>
